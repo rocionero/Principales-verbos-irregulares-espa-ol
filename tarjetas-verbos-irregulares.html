@@ -1,0 +1,520 @@
+<!DOCTYPE html>
+<html lang="es" data-theme="light">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Tarjetas dinámicas · Verbos irregulares</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500;700&family=Fraunces:opsz,wght@9..144,600;9..144,700&display=swap" rel="stylesheet">
+  <style>
+    :root, [data-theme="light"] {
+      --text-sm: clamp(0.95rem, 0.9rem + 0.25vw, 1.05rem);
+      --text-base: clamp(1.1rem, 1rem + 0.3vw, 1.25rem);
+      --text-lg: clamp(1.35rem, 1.2rem + 0.6vw, 1.8rem);
+      --text-xl: clamp(1.85rem, 1.4rem + 1.4vw, 2.8rem);
+      --text-2xl: clamp(2.4rem, 1.8rem + 2.4vw, 4rem);
+      --space-2: 0.5rem;
+      --space-3: 0.75rem;
+      --space-4: 1rem;
+      --space-6: 1.5rem;
+      --space-8: 2rem;
+      --space-10: 2.5rem;
+      --space-12: 3rem;
+      --radius-md: 0.75rem;
+      --radius-lg: 1.1rem;
+      --radius-xl: 1.5rem;
+      --color-bg: #f7f4ee;
+      --color-surface: #fffdfa;
+      --color-surface-2: #f1ece4;
+      --color-text: #211d17;
+      --color-text-muted: #665f57;
+      --color-border: rgba(33,29,23,0.12);
+      --color-primary: #0f766e;
+      --color-primary-strong: #0b5d57;
+      --color-accent: #d97706;
+      --shadow: 0 18px 50px rgba(38, 28, 17, 0.08);
+    }
+
+    [data-theme="dark"] {
+      --color-bg: #151311;
+      --color-surface: #211d1a;
+      --color-surface-2: #2a2522;
+      --color-text: #f3ede4;
+      --color-text-muted: #c0b4a6;
+      --color-border: rgba(243,237,228,0.12);
+      --color-primary: #4fd1c5;
+      --color-primary-strong: #84e3da;
+      --color-accent: #f59e0b;
+      --shadow: 0 18px 50px rgba(0,0,0,0.35);
+    }
+
+    * { box-sizing: border-box; }
+    html, body { margin: 0; padding: 0; }
+    body {
+      font-family: 'DM Sans', sans-serif;
+      background: linear-gradient(180deg, var(--color-bg) 0%, var(--color-surface-2) 100%);
+      color: var(--color-text);
+      min-height: 100vh;
+    }
+
+    .page {
+      width: min(1120px, calc(100% - 2rem));
+      margin: 0 auto;
+      padding: var(--space-8) 0 var(--space-12);
+    }
+
+    .topbar {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      gap: var(--space-4);
+      margin-bottom: var(--space-8);
+      flex-wrap: wrap;
+    }
+
+    .brand {
+      display: flex;
+      align-items: center;
+      gap: var(--space-3);
+      font-size: var(--text-sm);
+      color: var(--color-text-muted);
+    }
+
+    .logo {
+      width: 42px;
+      height: 42px;
+      border-radius: 12px;
+      background: var(--color-primary);
+      color: white;
+      display: grid;
+      place-items: center;
+      box-shadow: var(--shadow);
+      flex: 0 0 auto;
+    }
+
+    .controls {
+      display: flex;
+      flex-wrap: wrap;
+      gap: var(--space-3);
+      align-items: center;
+    }
+
+    button {
+      border: 1px solid var(--color-border);
+      background: var(--color-surface);
+      color: var(--color-text);
+      padding: 0.9rem 1.15rem;
+      border-radius: 999px;
+      font-size: var(--text-sm);
+      font-weight: 700;
+      cursor: pointer;
+    }
+
+    button.primary {
+      background: var(--color-primary);
+      color: #fff;
+      border-color: transparent;
+    }
+
+    button:focus-visible {
+      outline: 3px solid color-mix(in srgb, var(--color-primary) 35%, white);
+      outline-offset: 2px;
+    }
+
+    .hero {
+      background: var(--color-surface);
+      border: 1px solid var(--color-border);
+      border-radius: var(--radius-xl);
+      padding: clamp(1.5rem, 1rem + 2vw, 3rem);
+      box-shadow: var(--shadow);
+      margin-bottom: var(--space-8);
+    }
+
+    .eyebrow {
+      display: inline-flex;
+      align-items: center;
+      gap: 0.5rem;
+      padding: 0.45rem 0.85rem;
+      border-radius: 999px;
+      background: color-mix(in srgb, var(--color-primary) 10%, var(--color-surface));
+      color: var(--color-primary-strong);
+      font-size: var(--text-sm);
+      font-weight: 700;
+      margin-bottom: var(--space-4);
+    }
+
+    h1 {
+      font-family: 'Fraunces', serif;
+      font-size: var(--text-2xl);
+      line-height: 1;
+      margin: 0 0 var(--space-4);
+      max-width: 12ch;
+    }
+
+    .hero p {
+      margin: 0;
+      font-size: var(--text-base);
+      color: var(--color-text-muted);
+      max-width: 65ch;
+    }
+
+    .tips {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(180px, 1fr));
+      gap: var(--space-4);
+      margin-top: var(--space-6);
+    }
+
+    .tip {
+      background: var(--color-surface-2);
+      border: 1px solid var(--color-border);
+      border-radius: var(--radius-lg);
+      padding: var(--space-4);
+      font-size: var(--text-sm);
+      color: var(--color-text-muted);
+    }
+
+    .cards {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+      gap: var(--space-6);
+    }
+
+    .card {
+      perspective: 1400px;
+      min-height: 420px;
+    }
+
+    .card-inner {
+      position: relative;
+      width: 100%;
+      min-height: 420px;
+      transform-style: preserve-3d;
+      transition: transform 0.7s cubic-bezier(.2,.8,.2,1);
+    }
+
+    .card.is-flipped .card-inner { transform: rotateY(180deg); }
+
+    .face {
+      position: absolute;
+      inset: 0;
+      backface-visibility: hidden;
+      background: var(--color-surface);
+      border: 1px solid var(--color-border);
+      border-radius: var(--radius-xl);
+      box-shadow: var(--shadow);
+      padding: var(--space-6);
+      display: flex;
+      flex-direction: column;
+      justify-content: space-between;
+      overflow: hidden;
+    }
+
+    .face::before {
+      content: "";
+      position: absolute;
+      inset: 0;
+      background: linear-gradient(135deg, color-mix(in srgb, var(--color-primary) 10%, transparent), transparent 45%);
+      pointer-events: none;
+    }
+
+    .back {
+      transform: rotateY(180deg);
+      background: color-mix(in srgb, var(--color-primary) 8%, var(--color-surface));
+    }
+
+    .meta {
+      position: relative;
+      z-index: 1;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      gap: var(--space-3);
+      margin-bottom: var(--space-6);
+      color: var(--color-text-muted);
+      font-size: var(--text-sm);
+      font-weight: 700;
+      text-transform: uppercase;
+      letter-spacing: 0.04em;
+    }
+
+    .verb-block {
+      position: relative;
+      z-index: 1;
+      display: flex;
+      flex-direction: column;
+      gap: var(--space-4);
+      margin: auto 0;
+    }
+
+    .verb {
+      font-family: 'Fraunces', serif;
+      font-size: var(--text-xl);
+      line-height: 1.05;
+    }
+
+    .verb strong {
+      font-weight: 700;
+      display: block;
+    }
+
+    .translation {
+      font-size: var(--text-lg);
+      color: var(--color-primary-strong);
+      font-weight: 700;
+    }
+
+    .hint {
+      position: relative;
+      z-index: 1;
+      font-size: var(--text-sm);
+      color: var(--color-text-muted);
+    }
+
+    .conjugation {
+      position: relative;
+      z-index: 1;
+      display: flex;
+      flex-direction: column;
+      gap: var(--space-3);
+      font-size: clamp(1.05rem, 0.95rem + 0.4vw, 1.28rem);
+      line-height: 1.45;
+      margin-top: var(--space-4);
+    }
+
+    .line {
+      display: block;
+      padding-bottom: 0.35rem;
+      border-bottom: 1px dashed color-mix(in srgb, var(--color-primary) 25%, var(--color-border));
+    }
+
+    .actions {
+      position: relative;
+      z-index: 1;
+      display: flex;
+      justify-content: space-between;
+      gap: var(--space-3);
+      margin-top: var(--space-6);
+    }
+
+    .mini {
+      font-size: var(--text-sm);
+      padding: 0.8rem 1rem;
+      flex: 1;
+    }
+
+    .footer-note {
+      margin-top: var(--space-8);
+      text-align: center;
+      color: var(--color-text-muted);
+      font-size: var(--text-sm);
+    }
+
+    @media (max-width: 640px) {
+      .page { width: min(100% - 1rem, 1120px); padding-top: 1rem; }
+      .card, .card-inner { min-height: 470px; }
+      .actions { flex-direction: column; }
+      button, .mini { width: 100%; }
+      .topbar { align-items: stretch; }
+      .controls { width: 100%; }
+    }
+  </style>
+</head>
+<body>
+  <main class="page">
+    <section class="topbar" aria-label="Controles superiores">
+      <div class="brand">
+        <div class="logo" aria-hidden="true">
+          <svg viewBox="0 0 24 24" width="22" height="22" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round">
+            <path d="M6 5h12v14H6z"></path>
+            <path d="M9 9h6"></path>
+            <path d="M9 13h6"></path>
+          </svg>
+        </div>
+        <div>
+          <div><strong>Tarjetas dinámicas</strong></div>
+          <div>Verbos irregulares del presente · español → polaco</div>
+        </div>
+      </div>
+      <div class="controls">
+        <button type="button" class="primary" id="flipAll">Girar todas</button>
+        <button type="button" id="shuffleBtn">Mezclar tarjetas</button>
+        <button type="button" id="themeToggle" aria-label="Cambiar tema">Modo oscuro</button>
+      </div>
+    </section>
+
+    <section class="hero">
+      <div class="eyebrow">Actividad visual y dinámica</div>
+      <h1>Principales verbos irregulares del presente en español</h1>
+      <p>En el adverso aparece el infinitivo en <strong>negrita</strong> con su traducción al polaco. En el reverso aparece la conjugación completa, con cada forma colocada una debajo de otra y con tamaño grande para facilitar la lectura en clase o en pantalla.</p>
+      <div class="tips">
+        <div class="tip">Haz clic en cada tarjeta para girarla.</div>
+        <div class="tip">Usa “Mezclar tarjetas” para variar el orden de práctica.</div>
+        <div class="tip">Ideal para trabajo individual, por parejas o en pizarra digital.</div>
+      </div>
+    </section>
+
+    <section class="cards" id="cards" aria-label="Tarjetas de verbos"></section>
+
+    <p class="footer-note">Selección centrada en verbos frecuentes y muy útiles para alumnado de español como lengua extranjera.</p>
+  </main>
+
+  <script>
+    const verbs = [
+      {
+        infinitive: 'SER',
+        polish: 'być',
+        forms: ['Yo soy', 'Tú eres', 'Él / Ella es', 'Nosotros / Nosotras somos', 'Vosotros / Vosotras sois', 'Ellos / Ellas son']
+      },
+      {
+        infinitive: 'ESTAR',
+        polish: 'być / znajdować się',
+        forms: ['Yo estoy', 'Tú estás', 'Él / Ella está', 'Nosotros / Nosotras estamos', 'Vosotros / Vosotras estáis', 'Ellos / Ellas están']
+      },
+      {
+        infinitive: 'IR',
+        polish: 'iść / jechać',
+        forms: ['Yo voy', 'Tú vas', 'Él / Ella va', 'Nosotros / Nosotras vamos', 'Vosotros / Vosotras vais', 'Ellos / Ellas van']
+      },
+      {
+        infinitive: 'TENER',
+        polish: 'mieć',
+        forms: ['Yo tengo', 'Tú tienes', 'Él / Ella tiene', 'Nosotros / Nosotras tenemos', 'Vosotros / Vosotras tenéis', 'Ellos / Ellas tienen']
+      },
+      {
+        infinitive: 'VENIR',
+        polish: 'przychodzić',
+        forms: ['Yo vengo', 'Tú vienes', 'Él / Ella viene', 'Nosotros / Nosotras venimos', 'Vosotros / Vosotras venís', 'Ellos / Ellas vienen']
+      },
+      {
+        infinitive: 'HACER',
+        polish: 'robić',
+        forms: ['Yo hago', 'Tú haces', 'Él / Ella hace', 'Nosotros / Nosotras hacemos', 'Vosotros / Vosotras hacéis', 'Ellos / Ellas hacen']
+      },
+      {
+        infinitive: 'DECIR',
+        polish: 'mówić / powiedzieć',
+        forms: ['Yo digo', 'Tú dices', 'Él / Ella dice', 'Nosotros / Nosotras decimos', 'Vosotros / Vosotras decís', 'Ellos / Ellas dicen']
+      },
+      {
+        infinitive: 'PODER',
+        polish: 'móc',
+        forms: ['Yo puedo', 'Tú puedes', 'Él / Ella puede', 'Nosotros / Nosotras podemos', 'Vosotros / Vosotras podéis', 'Ellos / Ellas pueden']
+      },
+      {
+        infinitive: 'QUERER',
+        polish: 'chcieć',
+        forms: ['Yo quiero', 'Tú quieres', 'Él / Ella quiere', 'Nosotros / Nosotras queremos', 'Vosotros / Vosotras queréis', 'Ellos / Ellas quieren']
+      },
+      {
+        infinitive: 'PONER',
+        polish: 'kłaść / stawiać',
+        forms: ['Yo pongo', 'Tú pones', 'Él / Ella pone', 'Nosotros / Nosotras ponemos', 'Vosotros / Vosotras ponéis', 'Ellos / Ellas ponen']
+      },
+      {
+        infinitive: 'SALIR',
+        polish: 'wychodzić',
+        forms: ['Yo salgo', 'Tú sales', 'Él / Ella sale', 'Nosotros / Nosotras salimos', 'Vosotros / Vosotras salís', 'Ellos / Ellas salen']
+      },
+      {
+        infinitive: 'VER',
+        polish: 'widzieć',
+        forms: ['Yo veo', 'Tú ves', 'Él / Ella ve', 'Nosotros / Nosotras vemos', 'Vosotros / Vosotras veis', 'Ellos / Ellas ven']
+      }
+    ];
+
+    const cardsContainer = document.getElementById('cards');
+    const themeToggle = document.getElementById('themeToggle');
+    const flipAllBtn = document.getElementById('flipAll');
+    const shuffleBtn = document.getElementById('shuffleBtn');
+    let allFlipped = false;
+
+    function createCard(verb, index) {
+      const article = document.createElement('article');
+      article.className = 'card';
+      article.innerHTML = `
+        <div class="card-inner">
+          <section class="face front" aria-label="Adverso de la tarjeta ${index + 1}">
+            <div>
+              <div class="meta"><span>Adverso</span><span>${String(index + 1).padStart(2, '0')}</span></div>
+              <div class="verb-block">
+                <div class="verb"><strong>${verb.infinitive}</strong></div>
+                <div class="translation">${verb.polish}</div>
+              </div>
+            </div>
+            <div>
+              <div class="hint">Pulsa para ver la conjugación completa.</div>
+              <div class="actions">
+                <button type="button" class="mini primary js-flip">Ver reverso</button>
+              </div>
+            </div>
+          </section>
+          <section class="face back" aria-label="Reverso de la tarjeta ${index + 1}">
+            <div>
+              <div class="meta"><span>Reverso</span><span>${verb.infinitive}</span></div>
+              <div class="conjugation">
+                ${verb.forms.map(form => `<span class="line">${form}</span>`).join('')}
+              </div>
+            </div>
+            <div class="actions">
+              <button type="button" class="mini js-flip">Volver al adverso</button>
+            </div>
+          </section>
+        </div>
+      `;
+
+      article.addEventListener('click', (e) => {
+        if (e.target.closest('button')) return;
+        article.classList.toggle('is-flipped');
+      });
+
+      article.querySelectorAll('.js-flip').forEach(btn => {
+        btn.addEventListener('click', (e) => {
+          e.stopPropagation();
+          article.classList.toggle('is-flipped');
+        });
+      });
+
+      return article;
+    }
+
+    function renderCards(data) {
+      cardsContainer.innerHTML = '';
+      data.forEach((verb, index) => cardsContainer.appendChild(createCard(verb, index)));
+    }
+
+    function shuffle(array) {
+      const copy = [...array];
+      for (let i = copy.length - 1; i > 0; i--) {
+        const j = Math.floor(Math.random() * (i + 1));
+        [copy[i], copy[j]] = [copy[j], copy[i]];
+      }
+      return copy;
+    }
+
+    flipAllBtn.addEventListener('click', () => {
+      allFlipped = !allFlipped;
+      document.querySelectorAll('.card').forEach(card => {
+        card.classList.toggle('is-flipped', allFlipped);
+      });
+      flipAllBtn.textContent = allFlipped ? 'Mostrar adversos' : 'Girar todas';
+    });
+
+    shuffleBtn.addEventListener('click', () => {
+      allFlipped = false;
+      flipAllBtn.textContent = 'Girar todas';
+      renderCards(shuffle(verbs));
+    });
+
+    themeToggle.addEventListener('click', () => {
+      const root = document.documentElement;
+      const next = root.getAttribute('data-theme') === 'dark' ? 'light' : 'dark';
+      root.setAttribute('data-theme', next);
+      themeToggle.textContent = next === 'dark' ? 'Modo claro' : 'Modo oscuro';
+    });
+
+    renderCards(verbs);
+  </script>
+</body>
+</html>
